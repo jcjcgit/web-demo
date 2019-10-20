@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span class="class1" :class="classObj">{{message}}</span>
+        <span :class="classArr">{{message}}</span>
+        <!-- v-bind绑定class使用数组时 可以直接传入字符串 也可以传入变量在data里声明 -->
+        <span :class="[one, 'two']">{{message}}</span>
+        <!-- 自定义组件上的类会应用到组件的根元素 -->
+        <my-component class="one" :class="styleObj"></my-component>
+
+        <span :style="styleObj">绑定内联样式</span>
+    </div>
+
+    <script>
+        Vue.component('my-component', {
+            template: '<h1 class="two">hello vue</h1>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'jiangcheng',
+                one: 'one',
+                classObj: {
+                    box: true,
+                    head: true
+                },
+                classArr: ['blue', 'yellow'],
+                styleObj: {
+                    color: 'red',
+                    fontSize: '20px'
+                }
+            },
+
+        })
+
+    </script>
+</body>
+
+</html>

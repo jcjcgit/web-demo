@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vuex/3.1.1/vuex.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+
+
+    </div>
+
+    <script>
+        Vue.use('vuex')
+
+        const store = new Vuex.Store({
+            state: {
+                count: 0
+            }
+        })
+
+        const foo = {
+            props: {
+                count: Number
+            },
+            data() {
+                return {
+                    // count: this.$store.state.count
+                }
+            },
+            template: '<h1>{{count}}</h1>'
+        }
+
+        new Vue({
+            el: '#app',
+          
+            store,
+            components: {
+                foo,
+            },
+            methods: {
+               handleClick () {
+                    store.state.count ++;
+                    console.log(store.state.count)
+               }
+            },
+            template: `<div>
+                <foo :count="this.$store.state.count"></foo>
+                <button @click="handleClick">click</button>
+                </div>
+                `
+        })
+    </script>
+</body>
+
+</html>

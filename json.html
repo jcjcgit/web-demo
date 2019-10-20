@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const book = {
+            title: 'Javascript',
+            edition: 3,
+            year: 2010,
+            releaseDate: new Date(2019, 10, 20)
+        }
+
+        {
+            const jsonText = JSON.stringify(book); //{"title":"Javascript","edition":3,"year":2010} 值为undefined，函数的属性会被忽略
+
+            const bookCopy = JSON.parse(jsonText); //parse()如果包含无效的json 会抛出错误
+
+            // bookCopy === jsonText false JSON.parse()为浅拷贝
+        }
+
+        {
+            const jsonText = JSON.stringify(book, ['title', 'year'], 4);
+            // stringify第二个参数过滤器 可以是数组或者函数 如果是数组 结果只保留数组中出现的属性 如果是函数 接收两个参数为键和值
+            //第三个属性表示缩进的空格并且自动换行 数字最大为10， 也可以是字符串用来缩进
+            console.log(jsonText)
+            // {
+            //     "title": "Javascript",
+            //     "year": 2010
+            // }
+        }
+
+        {
+            const jsonText = JSON.stringify(book);
+
+            const bookCopy = JSON.parse(jsonText, function (key, value) {
+                // parse方法第二个参数 为还原函数，如果值为undefined会被忽略 对于值为日期字符串转化为日期对象时，需要用到还原函数
+                //注意：parse，stringify 第二个参数为函数时，必须要有返回值
+                if (key === 'releaseDate') {
+                    return new Date(value)
+                } else {
+                    return value
+                }
+            });
+
+            console.log(bookCopy)
+
+            // { 
+            // title: "Javascript", 
+            // edition: 3, 
+            // year: 2010, 
+            // releaseDate: Wed Nov 20 2019 00: 00: 00 GMT + 0800(China Standard Time)  如果没有还原函数直接parse，那么会被转化为字符串
+            // }
+        }
+
+        {
+            const book = {
+                title: 'Javascript',
+                edition: 3,
+                year: 2010,
+                releaseDate: new Date(2019, 10, 20),
+                toJSON: function () {
+                    return this.title
+                }
+            }
+
+            // toJSON()方法
+            // 1.如果存在toJSON()并且能够取到有效值， 那么调用此方法，否则返回对象本身
+            // 2.如果stringify()存在第二个参数，即函数数组的话，那么将第一步的值传入函数
+            // 3.对第二步返回值进行序列化
+            // 4.如果有第三个参数，再进行格式化
+
+            const jsonText = JSON.stringify(book);
+
+            console.log(jsonText) //'Javascript'  因为调用toJSON只返回了title属性 然后传入stringify
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

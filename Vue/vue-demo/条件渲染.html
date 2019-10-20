@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <span v-if="seen">one</span> -->
+        <template v-if="seen">
+            <!-- 需要多个元素同时显示隐藏哪个，可以将v-if绑定在template元素上 v-show则无法绑定 -->
+            <!-- test是计算属性 -->
+            <span>{{test}}</span> 
+            <span>one1</span>
+            <span>one2</span>
+        </template>
+        <span v-else>two</span>
+        <button @click="handleClick">btn</button>
+
+
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder="Enter your username" key="username">
+            <!-- 不需要复用的元素可以加个key值 -->
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder="Enter your email address" key="email">
+        </template>
+        <button @click="handleToggle">toggle it</button>
+    </div>
+
+    <script>
+        Vue.component('my-component', {
+            template: '<h1 class="two">hello vue</h1>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                seen: true,
+                loginType: 'username',
+                one: 'one'
+
+            },
+            methods: {
+                handleClick: function () {
+                    this.seen = false
+                },
+                handleToggle: function () {
+                    this.loginType = 'email'
+                }
+            },
+            computed: {//计算属性是里面值发生改变时，才会重新计算，否则会返回之前缓存的值
+                test: function () {
+                    return this.one
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

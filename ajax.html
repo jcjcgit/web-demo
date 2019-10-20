@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>button</button>
+
+    <script>
+        var btn = document.getElementsByTagName('button')[0];
+        btn.onclick = function () {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                        console.log(xhr.getResponseHeader('myHeader'))
+                        console.log(xhr.getAllResponseHeaders());
+                    } else {
+                        console.log(xhr.status)
+                    }
+                }
+
+            };
+
+            xhr.open('get', 'dom.html', true);
+            xhr.setRequestHeader('myHeader', 'myValue'); 
+            xhr.send(null)
+        }
+    </script>
+</body>
+
+</html>

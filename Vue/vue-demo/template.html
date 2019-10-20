@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <my-component :info='person'></my-component>
+        <test :name="person.name" :age="person.age" id="ccc" class="fff"></test>
+    </div>
+
+    <script>
+        Vue.component('my-component', {
+            props: {
+                info: Object
+                // 对于父组件传来的props值，只组件不应该改变它的值
+                // 如需要改变，1.最好定义一个本地的 data 属性并将这个 prop 用作其初始值 2.需要跟新值得变化，可以用计算属性computed
+            },
+            template: `<div>
+                           <span>i am come form template</span><br>
+                           <span>my name is {{info}}</span>
+            </div>`
+        })
+
+        Vue.component('test', {
+            inheritAttrs: false,
+            // 默认情况下vue会把父作用域的不被认作 props 的特性绑定 且作为普通的 HTML 特性应用在子组件的根元素上。
+            // 当在父作用域下，父组件传递给子组件值，子组件没有用props注册时，会被当做普通html属性显示在子组件根元素上
+            // inheritAttrs作用就是让未被props注册的属性不显示  class和style除外
+            
+            props: ['name'],
+            template: '<span>{{name}}</span>',
+            created: function () {
+                console.log(this.$attrs.age) //通过实例的$attrs对象可以取到父组件传来未被注册的值
+            }
+        })
+        new Vue({
+            el:'#app',
+            data: {
+                person: {
+                    name: 'tracy',
+                    age: 24,
+                    gender: 'female'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

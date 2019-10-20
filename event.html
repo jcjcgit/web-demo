@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>button</button>
+    <a href="https://www.baidu.com">baidu</a>
+    <script>
+        var btn = document.querySelector('button');
+        document.body.onclick = function (e) {
+            // 由btn触发事件 向上冒泡
+            console.log(this);  //body
+            console.log(e.currentTarget); //body
+            console.log(e.target);  //btn
+            // this,currentTarget始终指向注册的目标元素 target指向的是实际触发事件的元素
+
+
+            console.log(e.cancelable); //是否可以取消事件的默认行为 默认值为true  （在为true的情况下，preventDefault()才有用）
+            console.log(e.bubbles); //是否可以冒泡 默认值为true    （在为true的情况下，stopPropagation()才有用）
+        }
+
+        document.querySelector('a').onclick = function (e) {
+            e.cancelable = false;
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(e.cancelable)
+        }
+    </script>
+</body>
+
+</html>

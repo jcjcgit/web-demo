@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script>
+    
+        window.onload = function () {
+            ul = document.querySelector('ul');
+            console.log(ul.ownerDocument)
+            console.log(ul.hasChildNodes())
+            console.log(ul.parentNode)
+            console.log(ul.childNodes[0])
+            console.log(ul.firstChild) //lastChild firstElementChild lastElementChild
+            console.log(ul.nextSiblings) //previousSiblings nextElementSiblings previousSiblings
+            console.log(ul.ownerDocument)
+
+            var li = document.createElement('li');
+            li.innerText = 4;
+            // var licopy = ul.appendChild(li); //会返回插入到文档的元素
+            // console.log(licopy)
+
+            // ul.insertBefore(li, null) //后参数为null时，会插入到最后 效果同appendChild() 返回插入到文档的元素
+
+            // ul.replaceChild('新节点', '要替换的节点') //返回替换的节点
+
+            // ul.removeChild('要移除的节点') //返回移除的节点
+
+            var ulClone = ul.cloneNode(false);
+            console.log(ulClone)
+          
+        }
+    </script>
+</head>
+<body>
+    <ul>
+        <li>1 <a href="#">dd</a></li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="blue" class="red"></div>
+    <form action="">
+        <input maxlength="10" size="20" type="text" id="username" name="uesrname" value="Sansa Stark" placeholder='enter your username'>
+        <!-- maxlength 表示最多输入的字符  size表示输入可见的字符 -->
+        <label  for="username">username</label>
+        <input required type="text" id="password" name="password" placeholder='enter your password'>
+        <label for="password">pasword</label>
+        <input type="radio" value="blue" id="blue" name='color'>
+        <label for="blue"></label>
+        <input type="radio" value="yellow" id="yellow" name='color'>
+        <label for="yellow"></label>
+        <button type="button" name="ddd">reset</button>
+        <input type="reset" value="reset form">
+        <button type="submit">submit</button>
+
+        <select name="select" id="fruit" multiple>
+            <option value="apple">苹果</option>
+            <option>橘子</option>
+            <option value="orange">香蕉</option>
+        </select>
+
+        <textarea name="" id="" cols="20" rows="5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor eveniet iure consequuntur assumenda inventore, ullam porro ducimus quam asperiores, autem qui vero eaque sed doloribus recusandae quia laborum neque animi.</textarea>
+        <!-- 每个表单字段都有的属性
+            disabled：布尔值 当前字段禁用
+            form 指向当前表单字段所在的表单
+            name 当前字段的name属性
+            readonly 只读
+            type 表单字段的类型
+            value 当前字段提交给服务器的值
+         -->
+    </form>
+
+    <script>
+        let form = document.querySelector("form");
+
+        let rst = document.querySelector('button');
+
+        let smt = document.querySelector('button[type=submit]');
+
+        let sel = document.querySelector('#fruit');
+        //select选择框中有一些特有的属性和方法
+        // 1.add(newOption, oldOption);
+        // 2.multiple属性
+        // 3.options 保存的是选中框中所有的options选项
+        // 4.remove(index) 移除选项
+        // 5.selectedIndex 保存的是用户选中项的下标位置
+
+        //options选项的一些特有属性
+        // 1.index保存的是选项所在的索引
+        // 2.label等价于html中的label
+        // 3.selected 布尔值 表示当前项是否被选中 设置为true可以选中当前项
+        // 4.text当前项的文本
+        // 5.value当前项的value值
+
+        sel.onchange = function () {
+            //change事件 在input，textarea中value值改变并失去焦点触发 在select中改变value值即触发
+            console.log(this.selectedIndex);
+           // selectedIndex 保存的是用户选中项的下标位置
+           console.log(this.value);
+            //没有选中项时 value是空字符串
+            // 有一个选中项时，value是html中value值 如果是空字符串 那么也是空字符串 如果html没有设置value值，那么value等于选项的文本值
+            //有多个选项时，value取第一个选中的value值
+            console.log(this.options[this.selectedIndex])
+        }
+
+        form.elements[0].onselect = function () {
+            //select事件在用户选择文本并且松开鼠标时，触发事件
+            console.log(this);
+            console.log(this.selectionStart, this.selectionEnd);
+            //selectionStart 保存的是用户选择文本的开始下标 selectionEnd是结束下标 ie8及以下不支持 用document.selection
+            console.log(this.value.substring(this.selectionStart, this.selectionEnd));
+        }
+
+
+
+        console.log(form.elements);
+        //取得表单中的所有元素
+
+        console.log(form.elements['color']);
+        //可以通过下标或者表单字段的name属性， 表单中拥有多个相同name属性取得的是一个类数组
+
+        rst.onclick = function () {
+            form.reset(); //会触发reset事件处理函数
+            form.submit(); //不会触发submit提交事件处理函数
+
+            //  使用js的reset方法会触发reset()事件处理函数 这与js的submit()方法不同
+            // 直接调用js的submit方法 会提交表单 不会触发submit事件处理函数  只有单机submit提交按钮才会触发submit事件
+        }
+
+        form.onreset = function (e) {
+            //用户单机reset按钮或者js的reset()都会发出reset事件处理函数
+            e.preventDefault();
+            console.log(3333333)
+        }
+
+        form.onsubmit = function (e) {
+            e.preventDefault();
+        }
+    </script>
+</body>
+
+</html>

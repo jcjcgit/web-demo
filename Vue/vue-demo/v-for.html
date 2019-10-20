@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in items">{{item.text}}-{{index}}</li>
+            <!-- 遍历数组时第一个参数是数组的值  第二个参数为数组的下标 -->
+        </ul>
+
+        <ul>
+            <li v-for="(value, name, index) in obj">{{value}}-{{name}}-{{index}}</li>
+            <!-- v-for遍历对象时，第一个参数是对象的属性值，第二个是对象的属性名 第三个参数是索引下标-->
+        </ul>
+        <!-- 数组的变异方法 会改变原数组 push,pop,shift，unshift，splice，sort，reverse -->
+        <!-- 数组的替换方法 不改变原数组返回一个新的数组 filter， concat，slice -->
+
+
+
+    </div>
+
+    <div id="test">
+        <ul>
+            <li v-for="item in items">{{item}}</li>
+        </ul>
+        <button @click="handleClick">add</button>
+    </div>
+
+    <script>
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                items: [
+                    { text: 'apple' },
+                    { text: 'pear' },
+                    { text: 'banana' }
+                ],
+                obj: {
+                    one: 10,
+                    two: 20,
+                    three: 30
+                }
+            },
+        })
+
+        var test = new Vue({
+            el: '#test',
+            data: {
+                items: ['one', 'two', 'three']
+            },
+            methods: {
+                handleClick: function () {
+                    Vue.set(this.items, this.items.length, 'new')
+                    //需要动态的改变数组或对象时，用Vue.set()或者vm.$set()或者splice()
+                }
+            }
+        })
+
+    </script>
+</body>
+
+</html>
